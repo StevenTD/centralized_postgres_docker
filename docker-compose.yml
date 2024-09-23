@@ -1,0 +1,16 @@
+services:
+  centralized_postgres_db:
+    image: postgres:14-alpine
+    restart: always
+    ports:
+      - 0.0.0.0:5555:5432
+    volumes:
+      - centralized-postgres-data:/var/lib/postgresql/data
+      - ./create-db.sql:/docker-entrypoint-initdb.d/create_database.sql
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_HOST_AUTH_METHOD=trust
+
+volumes:
+  centralized-postgres-data:
